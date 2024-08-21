@@ -1,0 +1,189 @@
+body {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    background-color: #f2f2f3;
+    font-family: 'Aptos', sans-serif;
+}
+
+#clock {
+    display: flex;
+    align-items: center;
+    font-size: 14em;
+    font-weight: bold;
+    letter-spacing: 0.02em;
+    color: #343434;
+    margin-bottom: 0.2em;
+}
+
+.time {
+    display: flex;
+    align-items: center;
+}
+
+#sep-s, #s1, #s2 {
+    color: #aeaeae;
+}
+
+.fade-out {
+    animation: fadeOut 0.45s ease-in-out;
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.controls {
+    position: fixed;
+    bottom: 2em;
+    display: flex;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+}
+
+
+button {
+    cursor: pointer;
+    border: 0.05em solid #343434;
+    background-color: #f2f2f3;
+    padding: 0.43em;
+    border-radius: 0.2em;
+    width: 7.7em;
+    font-family: 'Segoe UI', sans-serif;
+    color: #343434;
+    font-size: 1.15em;
+    margin-right: 3.1em;
+}
+
+button:hover {
+    background-color: #007dbf;
+    border: 0.05em solid #007dbf;
+    color: white;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-0.2em); }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+#text {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 1.15em;
+    color: #343434;
+    margin-left: 0.75em;
+}
+
+/* Toggle Switch Styles */
+.toggle-switch {
+    position: relative;
+    width: 2.7em;
+    height: 1.4em;
+}
+
+.toggle-switch input {
+    display: none;
+}
+
+.switch {
+    position: absolute;
+    cursor: pointer;
+    background-color: #f2f2f3;
+    border: 0.05em solid #343434;
+    border-radius: 2em;
+    transition: none;
+    width: 100%;
+    height: 100%;
+}
+
+.switch:hover {
+    transition: none;
+    background-color: #007dbf;
+    border-color: #007dbf;
+}
+
+.switch:hover::before {
+    background-color: white;
+}
+
+.switch::before {
+    content: "";
+    position: absolute;
+    height: 1em;
+    width: 1em;
+    left: 0.2em;
+    bottom: 0.2em;
+    background-color: #343434;
+    border-radius: 50%;
+    transition: transform 0.4s;
+}
+
+input:checked + .switch {
+    transition: background-color 0.4s;
+}
+
+input:checked + .switch::before {
+    transform: translateX(1.3em);
+}
+
+
+/* Dark mode styling */
+body.dark-mode {
+    background-color: #19191a;
+    color: #ededed;
+}
+
+body.dark-mode #clock {
+    color: #ededed;
+}
+
+body.dark-mode #sep-s, body.dark-mode #s1, body.dark-mode #s2 {
+    color: #808082;
+}
+
+body.dark-mode button {
+    background-color: #19191a;
+    border-color: #b4b7ba;
+    color: #b4b7ba;
+}
+
+body.dark-mode button:hover {
+    border-color: #cacdd0;
+    color: #cacdd0;
+}
+
+body.dark-mode .switch {
+    background-color: #19191a;
+    border-color: #b4b7ba;
+}
+
+body.dark-mode .switch:hover {
+    border-color: #cacdd0;
+}
+
+body.dark-mode input:checked + .switch::before {
+    background-color: #b4b7ba;
+}
+
+body.dark-mode input:checked + .switch:hover::before {
+    background-color: #cacdd0;
+}
+
+body.dark-mode #text {
+    color: #b4b7ba;
+}
+
+body.dark-mode .toggle-switch:hover ~ #text {
+    color: #cacdd0;
+}

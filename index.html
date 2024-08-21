@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/icon.svg" type="image/svg+xml">
+    <title>Digital Clock</title>
+</head>
+<body>
+    <div id="clock">
+        <div class="time">
+            <span id="h1"></span>
+            <span id="h2"></span>
+            <span id="sep">:</span>
+            <span id="m1"></span>
+            <span id="m2"></span>
+            <span id="sep-s">:</span>
+            <span id="s1"></span>
+            <span id="s2"></span>
+        </div>
+    </div>
+    <div class="controls">
+        <button id="toggleSeconds">Hide seconds</button>
+        <div class="toggle-switch">
+            <input type="checkbox" id="darkModeToggle">
+            <label for="darkModeToggle" class="switch"></label>
+        </div>
+        <div id="text">Dark mode</div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
