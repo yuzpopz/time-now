@@ -145,5 +145,5 @@ function showCursorAndControls() {
 document.addEventListener("mousemove", () => {
     clearTimeout(timeoutId);
     showCursorAndControls();
-    timeoutId = setTimeout(hideCursorAndControls, 3000);
+    timeoutId = setTimeout(hideCursorAndControls, 4000);
 })
