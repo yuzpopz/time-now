@@ -58,7 +58,7 @@ body {
 .controls {
     position: fixed;
     bottom: 2em;
-    font-size: max(1vw, 1vh);
+    font-size: max(1vw, 1.45vh);
     display: flex;
     align-items: center;
     opacity: 1;
