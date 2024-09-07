@@ -121,6 +121,7 @@ window.addEventListener("load", () => {
 
 // Toggle dark mode and save the preference
 darkModeToggle.addEventListener("change", () => {
+    toggleSeconds.style.transition = "background-color 0.3s, color 0.3s, border 0.3s";
     if (darkModeToggle.checked) {
         body.classList.add("dark-mode");
         localStorage.setItem("theme", "dark");
@@ -128,6 +129,9 @@ darkModeToggle.addEventListener("change", () => {
         body.classList.remove("dark-mode");
         localStorage.setItem("theme", "light");
     }
+    setTimeout(() => {
+        toggleSeconds.style.transition = "none";
+    }, 300);
 });
 
 
