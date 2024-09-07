@@ -9,6 +9,7 @@ let s2 = document.getElementById("s2");
 let sepS = document.getElementById("sep-s");
 let toggleSeconds = document.getElementById("toggleSeconds");
 let darkModeToggle = document.getElementById("darkModeToggle");
+let darkModeText = document.getElementById("text");
 let body = document.body;
 let controls = document.getElementsByClassName("controls")[0];
 let timeoutId;
@@ -122,6 +123,7 @@ window.addEventListener("load", () => {
 // Toggle dark mode and save the preference
 darkModeToggle.addEventListener("change", () => {
     toggleSeconds.style.transition = "background-color 0.3s, color 0.3s, border 0.3s";
+    darkModeText.style.transition = "color 0.3s";
     if (darkModeToggle.checked) {
         body.classList.add("dark-mode");
         localStorage.setItem("theme", "dark");
@@ -131,6 +133,7 @@ darkModeToggle.addEventListener("change", () => {
     }
     setTimeout(() => {
         toggleSeconds.style.transition = "none";
+        darkModeText.style.transition = "none";
     }, 300);
 });
 

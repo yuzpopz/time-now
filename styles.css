@@ -103,7 +103,7 @@ button:hover {
     font-family: 'Segoe UI', sans-serif;
     font-size: 1.15em;
     color: #343434;
-    transition: color 0.3s;
+    transition: none;
     margin-left: 0.75em;
 }
 
