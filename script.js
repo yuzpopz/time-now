@@ -118,11 +118,6 @@ window.addEventListener("load", () => {
         body.classList.remove("dark-mode");
         darkModeToggle.checked = false;
     }
-
-    // Hide controls and cursor on initial load
-    controls.style.opacity = 0;
-    body.style.cursor = "none";
-    timeoutId = setTimeout(hideCursorAndControls, 4000);
 });
 
 // Toggle dark mode and save the preference
