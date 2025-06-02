@@ -64,7 +64,7 @@ body {
     font-size: max(1vw, 1.45vh);
     display: flex;
     align-items: center;
-    opacity: 1;
+    opacity: 0;
     transition: opacity 0.2s ease-in-out;
 }
 
