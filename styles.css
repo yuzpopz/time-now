@@ -68,7 +68,6 @@ body {
     transition: opacity 0.2s ease-in-out;
 }
 
-
 button {
     cursor: pointer;
     border: 0.8px solid #343434;
@@ -99,7 +98,16 @@ button:hover {
     100% { opacity: 1; }
 }
 
-#text {
+#darkModeText {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 1.15em;
+    color: #343434;
+    transition: none;
+    margin-left: 0.75em;
+    margin-right: 2.3em;
+}
+
+#fullScreenText {
     font-family: 'Segoe UI', sans-serif;
     font-size: 1.15em;
     color: #343434;
@@ -108,17 +116,17 @@ button:hover {
 }
 
 /* Toggle Switch Styles */
-.toggle-switch {
+.toggle-switch1, .toggle-switch2 {
     position: relative;
     width: 2.7em;
     height: 1.4em;
 }
 
-.toggle-switch input {
+.toggle-switch1 input, .toggle-switch2 input {
     display: none;
 }
 
-.switch {
+.switch1, .switch2 {
     position: absolute;
     cursor: pointer;
     background-color: #f2f2f3;
@@ -129,17 +137,17 @@ button:hover {
     height: 100%;
 }
 
-.switch:hover {
+.switch1:hover, .switch2:hover {
     transition: none;
     background-color: #007dbf;
     border-color: #007dbf;
 }
 
-.switch:hover::before {
+.switch1:hover::before, .switch2:hover::before {
     background-color: white;
 }
 
-.switch::before {
+.switch1::before, .switch2::before {
     content: "";
     position: absolute;
     height: 1em;
@@ -151,14 +159,19 @@ button:hover {
     transition: transform 0.3s;
 }
 
-input:checked + .switch {
+input:checked + .switch1 {
     transition: background-color 0.3s;
 }
 
-input:checked + .switch::before {
+input:checked + .switch1::before,
+input:checked + .switch2::before {
     transform: translateX(1.3em);
 }
 
+/* Add this transition rule */
+input:checked + .switch2 {
+    transition: background-color 0.3s;
+}
 
 /* Dark mode styling */
 body.dark-mode {
@@ -185,27 +198,44 @@ body.dark-mode button:hover {
     color: #cacdd0;
 }
 
-body.dark-mode .switch {
+body.dark-mode .switch1, body.dark-mode .switch2 {
     background-color: #19191a;
     border-color: #b4b7ba;
 }
 
-body.dark-mode .switch:hover {
+body.dark-mode .switch1:hover, body.dark-mode .switch2:hover {
     border-color: #cacdd0;
 }
 
-body.dark-mode input:checked + .switch::before {
+body.dark-mode input:checked + .switch1::before,
+body.dark-mode input:checked + .switch2::before { /* Add Full Screen */
     background-color: #b4b7ba;
 }
 
-body.dark-mode input:checked + .switch:hover::before {
+/* Add base dark mode style for BOTH toggles */
+body.dark-mode .switch1::before,
+body.dark-mode .switch2::before {
+    background-color: #b4b7ba; /* Now consistent */
+}
+
+/* Unified hover states */
+body.dark-mode .switch1:hover::before,
+body.dark-mode .switch2:hover::before {
     background-color: #cacdd0;
 }
 
-body.dark-mode #text {
+/* Added specific checked+hover states */
+body.dark-mode input:checked + .switch1:hover::before,
+body.dark-mode input:checked + .switch2:hover::before {
+    background-color: #cacdd0;
+}
+
+body.dark-mode #darkModeText,
+body.dark-mode #fullScreenText {
     color: #b4b7ba;
 }
 
-body.dark-mode .toggle-switch:hover ~ #text {
+body.dark-mode .toggle-switch1:hover ~ #darkModeText,
+body.dark-mode .toggle-switch2:hover ~ #fullScreenText {
     color: #cacdd0;
 }

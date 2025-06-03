@@ -9,7 +9,9 @@ let s2 = document.getElementById("s2");
 let sepS = document.getElementById("sep-s");
 let toggleSeconds = document.getElementById("toggleSeconds");
 let darkModeToggle = document.getElementById("darkModeToggle");
-let darkModeText = document.getElementById("text");
+let darkModeText = document.getElementById("darkModeText");
+let fullScreenToggle = document.getElementById("fullScreenToggle");
+let fullScreenText = document.getElementById("fullScreenText");
 let body = document.body;
 let controls = document.getElementsByClassName("controls")[0];
 let timeoutId;
@@ -77,7 +79,6 @@ function updateClock() {
 
 updateClock();
 
-
 // Check the saved state on page load
 window.addEventListener("load", () => {
     const savedState = localStorage.getItem("secondsVisibility");
@@ -106,7 +107,6 @@ toggleSeconds.addEventListener("click", () => {
     localStorage.setItem("secondsVisibility", isHidden ? "visible" : "hidden");
 });
 
-
 // Check the saved theme preference on page load
 window.addEventListener("load", () => {
     const savedTheme = localStorage.getItem("theme");
@@ -118,12 +118,16 @@ window.addEventListener("load", () => {
         body.classList.remove("dark-mode");
         darkModeToggle.checked = false;
     }
+
+    updateFullScreenState(); // Add this
 });
 
 // Toggle dark mode and save the preference
 darkModeToggle.addEventListener("change", () => {
     toggleSeconds.style.transition = "background-color 0.3s, color 0.3s, border 0.3s";
     darkModeText.style.transition = "color 0.3s";
+    fullScreenText.style.transition = "color 0.3s";
+    fullScreenToggle.style.transition = "background-color 0.3s, color 0.3s, border 0.3s";
     if (darkModeToggle.checked) {
         body.classList.add("dark-mode");
         localStorage.setItem("theme", "dark");
@@ -134,6 +138,8 @@ darkModeToggle.addEventListener("change", () => {
     setTimeout(() => {
         toggleSeconds.style.transition = "none";
         darkModeText.style.transition = "none";
+        fullScreenText.style.transition = "none";
+        fullScreenToggle.style.transition = "none";
     }, 300);
 });
 
@@ -155,6 +161,25 @@ document.addEventListener("mousemove", () => {
     timeoutId = setTimeout(hideCursorAndControls, 4000);
 })
 
+// Create function to update toggle state
+function updateFullScreenState() {
+    const isFullscreen = !!document.fullscreenElement || 
+                         !!document.webkitFullscreenElement ||
+                         !!document.mozFullScreenElement ||
+                         !!document.msFullscreenElement;
+    
+    fullScreenToggle.checked = isFullscreen;
+}
+
+// Add fullscreen change event listeners
+document.addEventListener('fullscreenchange', updateFullScreenState);
+document.addEventListener('webkitfullscreenchange', updateFullScreenState);
+document.addEventListener('mozfullscreenchange', updateFullScreenState);
+document.addEventListener('MSFullscreenChange', updateFullScreenState);
+
+// Add toggle event listener
+fullScreenToggle.addEventListener('change', toggleFullScreen);
+
 function toggleFullScreen() {
     if (!document.fullscreenElement) {
         if (document.documentElement.requestFullscreen) {
@@ -166,6 +191,7 @@ function toggleFullScreen() {
         } else if (document.documentElement.msRequestFullscreen) { /* IE/Edge */
             document.documentElement.msRequestFullscreen();
         }
+        fullScreenToggle.checked = true; // Update toggle state
     } else {
         if (document.exitFullscreen) {
             document.exitFullscreen();
@@ -176,25 +202,6 @@ function toggleFullScreen() {
         } else if (document.msExitFullscreen) { /* IE/Edge */
             document.msExitFullscreen();
         }
+        fullScreenToggle.checked = false; // Update toggle state
     }
 }
-
-let tappedTwice = false;
-
-document.addEventListener('touchstart', function (event) {
-    if (event.touches.length === 1) {
-        if (tappedTwice) {
-            tappedTwice = false;
-            toggleFullScreen();
-        } else {
-            tappedTwice = true;
-            setTimeout(function () {
-                tappedTwice = false;
-            }, 300);
-        }
-    } else {
-        tappedTwice = false;
-    }
-});
-
-document.addEventListener('dblclick', toggleFullScreen);
