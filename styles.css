@@ -27,6 +27,11 @@ body {
     body {
         font-size: 1.45vw
     }
+    /* Add these lines to hide full-screen toggle elements */
+    .toggle-switch2,
+    #fullScreenText {
+        display: none !important;
+    }
 }
 
 #clock {
