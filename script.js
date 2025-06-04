@@ -161,6 +161,30 @@ document.addEventListener("mousemove", () => {
     timeoutId = setTimeout(hideCursorAndControls, 4000);
 })
 
+// Add keyboard shortcuts for 'd' (dark mode) and 'f' (full screen)
+document.addEventListener('keydown', (event) => {
+    // Only trigger if not focused on an input element
+    if (event.target.tagName !== 'INPUT') {
+        // Reset inactivity timer
+        clearTimeout(timeoutId);
+        showCursorAndControls();
+        timeoutId = setTimeout(hideCursorAndControls, 4000);
+        
+        // Toggle dark mode on 'd' key press
+        if (event.key === 'd' || event.key === 'D') {
+            event.preventDefault();
+            darkModeToggle.checked = !darkModeToggle.checked;
+            const changeEvent = new Event('change');
+            darkModeToggle.dispatchEvent(changeEvent);
+        } 
+        // Toggle full screen on 'f' key press
+        else if (event.key === 'f' || event.key === 'F') {
+            event.preventDefault();
+            toggleFullScreen();
+        }
+    }
+});
+
 // Create function to update toggle state
 function updateFullScreenState() {
     const isFullscreen = !!document.fullscreenElement || 
