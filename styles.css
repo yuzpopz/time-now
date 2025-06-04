@@ -173,11 +173,6 @@ input:checked + .switch2::before {
     transform: translateX(1.3em);
 }
 
-/* Add this transition rule */
-input:checked + .switch2 {
-    transition: background-color 0.3s;
-}
-
 /* Dark mode styling */
 body.dark-mode {
     background-color: #19191a;
