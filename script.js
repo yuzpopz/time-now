@@ -182,6 +182,11 @@ document.addEventListener('keydown', (event) => {
             event.preventDefault();
             toggleFullScreen();
         }
+        // Toggle seconds display on 's' key press
+        else if (event.key === 's' || event.key === 'S') {
+            event.preventDefault();
+            toggleSeconds.click();
+        }
     }
 });
 
