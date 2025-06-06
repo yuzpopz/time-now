@@ -103,21 +103,13 @@ button:hover {
     100% { opacity: 1; }
 }
 
-#darkModeText {
+#darkModeText, #fullScreenText {
     font-family: 'Segoe UI', sans-serif;
     font-size: 1.15em;
     color: #343434;
     transition: none;
     margin-left: 0.75em;
     margin-right: 2.3em;
-}
-
-#fullScreenText {
-    font-family: 'Segoe UI', sans-serif;
-    font-size: 1.15em;
-    color: #343434;
-    transition: none;
-    margin-left: 0.75em;
 }
 
 /* Toggle Switch Styles */
@@ -150,6 +142,10 @@ button:hover {
 
 .switch1:hover::before, .switch2:hover::before {
     background-color: white;
+}
+
+.switch1.transition-on::before, .switch2.transition-on::before {
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 0.3s;
 }
 
 .switch1::before, .switch2::before {

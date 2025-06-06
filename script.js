@@ -12,6 +12,8 @@ let darkModeToggle = document.getElementById("darkModeToggle");
 let darkModeText = document.getElementById("darkModeText");
 let fullScreenToggle = document.getElementById("fullScreenToggle");
 let fullScreenText = document.getElementById("fullScreenText");
+let switch1 = document.querySelector('.switch1');
+let switch2 = document.querySelector('.switch2');
 let body = document.body;
 let controls = document.getElementsByClassName("controls")[0];
 let timeoutId;
@@ -124,10 +126,13 @@ window.addEventListener("load", () => {
 
 // Toggle dark mode and save the preference
 darkModeToggle.addEventListener("change", () => {
-    toggleSeconds.style.transition = "background-color 0.3s, color 0.3s, border 0.3s";
+    toggleSeconds.style.transition = "background-color 0.3s, color 0.3s, border-color 0.3s";
     darkModeText.style.transition = "color 0.3s";
     fullScreenText.style.transition = "color 0.3s";
-    fullScreenToggle.style.transition = "background-color 0.3s, color 0.3s, border 0.3s";
+    switch1.style.transition = "background-color 0.3s, color 0.3s, border-color 0.3s";
+    switch2.style.transition = "background-color 0.3s, color 0.3s, border-color 0.3s";
+    document.querySelector('.switch1').classList.add('transition-on');
+    document.querySelector('.switch2').classList.add('transition-on');
     if (darkModeToggle.checked) {
         body.classList.add("dark-mode");
         localStorage.setItem("theme", "dark");
@@ -139,7 +144,11 @@ darkModeToggle.addEventListener("change", () => {
         toggleSeconds.style.transition = "none";
         darkModeText.style.transition = "none";
         fullScreenText.style.transition = "none";
-        fullScreenToggle.style.transition = "none";
+        switch1.style.transition = "none";
+        switch2.style.transition = "none";
+        document.querySelector('.switch1').classList.remove('transition-on');
+        document.querySelector('.switch2').classList.remove('transition-on');
+
     }, 300);
 });
 
