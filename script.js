@@ -17,6 +17,7 @@ let switch2 = document.querySelector('.switch2');
 let body = document.body;
 let controls = document.getElementsByClassName("controls")[0];
 let timeoutId;
+let confettiFired = false;
 
 function transitionText() {
     const d = new Date();
@@ -60,6 +61,27 @@ function transitionText() {
 
 function updateClock() {
     const d = new Date();
+
+    // Check if it's New Years (January 01 00:00:00 to 00:00:59)
+    const isDate = d.getMonth() === 0 && d.getDate() === 1;
+    const isTime = d.getHours() === 0 && d.getMinutes() === 0 && d.getSeconds() >= 0 && d.getSeconds() <= 59;
+
+    if (isDate && isTime && !confettiFired) {
+        launchConfetti({
+            duration: 800,
+            startVelocity: 50,
+            ticks: undefined // using default value
+        });
+        setTimeout(() => {
+            launchConfetti({
+                duration: 1300,
+                startVelocity: 60,
+                ticks: 300
+            });
+        }, 2000);
+
+        confettiFired = true;
+    }
 
     var h = d.getHours().toString().padStart(2, "0");
     var m = d.getMinutes().toString().padStart(2, "0");
@@ -168,7 +190,7 @@ document.addEventListener("mousemove", () => {
     clearTimeout(timeoutId);
     showCursorAndControls();
     timeoutId = setTimeout(hideCursorAndControls, 4000);
-})
+});
 
 // Add keyboard shortcuts for 'd' (dark mode) and 'f' (full screen)
 document.addEventListener('keydown', (event) => {
@@ -178,14 +200,14 @@ document.addEventListener('keydown', (event) => {
         clearTimeout(timeoutId);
         showCursorAndControls();
         timeoutId = setTimeout(hideCursorAndControls, 4000);
-        
+
         // Toggle dark mode on 'd' key press
         if (event.key === 'd' || event.key === 'D') {
             event.preventDefault();
             darkModeToggle.checked = !darkModeToggle.checked;
             const changeEvent = new Event('change');
             darkModeToggle.dispatchEvent(changeEvent);
-        } 
+        }
         // Toggle full screen on 'f' key press
         else if (event.key === 'f' || event.key === 'F') {
             event.preventDefault();
@@ -201,11 +223,11 @@ document.addEventListener('keydown', (event) => {
 
 // Create function to update toggle state
 function updateFullScreenState() {
-    const isFullscreen = !!document.fullscreenElement || 
-                         !!document.webkitFullscreenElement ||
-                         !!document.mozFullScreenElement ||
-                         !!document.msFullscreenElement;
-    
+    const isFullscreen = !!document.fullscreenElement ||
+        !!document.webkitFullscreenElement ||
+        !!document.mozFullScreenElement ||
+        !!document.msFullscreenElement;
+
     fullScreenToggle.checked = isFullscreen;
 }
 
@@ -222,24 +244,69 @@ function toggleFullScreen() {
     if (!document.fullscreenElement) {
         if (document.documentElement.requestFullscreen) {
             document.documentElement.requestFullscreen();
-        } else if (document.documentElement.mozRequestFullScreen) { /* Firefox */
+        } else if (document.documentElement.mozRequestFullScreen) {
+            /* Firefox */
             document.documentElement.mozRequestFullScreen();
-        } else if (document.documentElement.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+        } else if (document.documentElement.webkitRequestFullscreen) {
+            /* Chrome, Safari and Opera */
             document.documentElement.webkitRequestFullscreen();
-        } else if (document.documentElement.msRequestFullscreen) { /* IE/Edge */
+        } else if (document.documentElement.msRequestFullscreen) {
+            /* IE/Edge */
             document.documentElement.msRequestFullscreen();
         }
         fullScreenToggle.checked = true; // Update toggle state
     } else {
         if (document.exitFullscreen) {
             document.exitFullscreen();
-        } else if (document.mozCancelFullScreen) { /* Firefox */
+        } else if (document.mozCancelFullScreen) {
+            /* Firefox */
             document.mozCancelFullScreen();
-        } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+        } else if (document.webkitExitFullscreen) {
+            /* Chrome, Safari and Opera */
             document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) { /* IE/Edge */
+        } else if (document.msExitFullscreen) {
+            /* IE/Edge */
             document.msExitFullscreen();
         }
         fullScreenToggle.checked = false; // Update toggle state
     }
+}
+
+function launchConfetti(options) {
+    const {
+        duration,
+        startVelocity,
+        ticks
+    } = options;
+
+    const end = Date.now() + duration;
+
+    (function frame() {
+        confetti({
+            particleCount: 4,
+            angle: 60,
+            spread: 60,
+            scalar: 1.1,
+            startVelocity,
+            ticks,
+            origin: {
+                x: 0
+            }
+        });
+        confetti({
+            particleCount: 4,
+            angle: 120,
+            spread: 60,
+            scalar: 1.1,
+            startVelocity,
+            ticks,
+            origin: {
+                x: 1
+            }
+        });
+
+        if (Date.now() < end) {
+            requestAnimationFrame(frame);
+        }
+    })();
 }
