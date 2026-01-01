@@ -235,3 +235,48 @@ body.dark-mode .toggle-switch1:hover ~ #darkModeText,
 body.dark-mode .toggle-switch2:hover ~ #fullScreenText {
     color: #cacdd0;
 }
+
+/* AWESOME EASTER EGG :) */
+
+/* Force layout consistency and remove transitions for sharp flashing */
+body.awesome-active, 
+body.awesome-active * {
+    transition: none !important;
+}
+
+/* Unified White + Shadow Style (Applied after 1 period) */
+body.awesome-styled #clock,
+body.awesome-styled #clock span,
+body.awesome-styled #darkModeText,
+body.awesome-styled #fullScreenText,
+body.awesome-styled button {
+    color: white !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4) !important;
+    border-color: white !important;
+}
+
+/* Styling the Toggles and their internal circles (fills) */
+body.awesome-styled .switch1,
+body.awesome-styled .switch2 {
+    border-color: white !important;
+}
+
+body.awesome-styled button,
+body.awesome-styled .switch1,
+body.awesome-styled .switch2 {
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2) !important;
+    color: white !important;
+}
+
+body.awesome-styled .switch1::before,
+body.awesome-styled .switch2::before {
+    background-color: white !important;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Utility to force immediate reset when ending Awesome Mode */
+.no-transitions,
+.no-transitions * {
+    transition: none !important;
+    animation: none !important;
+}

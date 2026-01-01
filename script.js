@@ -192,31 +192,115 @@ document.addEventListener("mousemove", () => {
     timeoutId = setTimeout(hideCursorAndControls, 4000);
 });
 
-// Add keyboard shortcuts for 'd' (dark mode) and 'f' (full screen)
+// --- Awesome Easter Egg Configuration ---
+const FLASH_PERIOD = 200;
+const FLASH_COLORS = ['#36c900', '#7200ff', '#fd4ab6', '#00609f', '#0afff7', '#ddff20'];
+
+let typingBuffer = "";
+let awesomeConsent = null; // Session-based consent
+let isFlashing = false;
+let flashIntervalId = null;
+let lastColorIndex = -1;
+
+function triggerAwesomeMode() {
+    // 1 & 2. Handle Consent
+    if (awesomeConsent === null) {
+        awesomeConsent = confirm("The following contains flashing lights that may trigger seizures for people with photosensitive epilepsy. Continue?");
+    }
+    if (!awesomeConsent) return;
+
+    if (isFlashing) {
+        stopAwesomeMode();
+        return;
+    }
+
+    isFlashing = true;
+    body.classList.add('awesome-active');
+    
+    let tickCount = 0;
+
+    flashIntervalId = setInterval(() => {
+        tickCount++;
+
+        // 2. Only apply white text/shadows AFTER one period [Requirement 2]
+        if (tickCount === 1) {
+            body.classList.add('awesome-styled');
+        }
+
+        // 3. Select random color avoiding consecutive repeats
+        let newIndex;
+        do {
+            newIndex = Math.floor(Math.random() * FLASH_COLORS.length);
+        } while (newIndex === lastColorIndex);
+        
+        lastColorIndex = newIndex;
+        const color = FLASH_COLORS[newIndex];
+
+        // 4. Update backgrounds for body and UI elements [Requirement 3 & 4]
+        body.style.backgroundColor = color;
+        const uiBackgrounds = document.querySelectorAll('button, .switch1, .switch2');
+        uiBackgrounds.forEach(el => el.style.backgroundColor = color);
+    }, FLASH_PERIOD);
+}
+
+function stopAwesomeMode() {
+    isFlashing = false;
+    clearInterval(flashIntervalId);
+
+    // 1. Add a temporary class to kill all transitions/animations immediately
+    body.classList.add('no-transitions');
+
+    // 2. Perform the reset
+    body.classList.remove('awesome-active', 'awesome-styled');
+    body.style.backgroundColor = "";
+    document.querySelectorAll('button, .switch1, .switch2').forEach(el => {
+        el.style.backgroundColor = "";
+    });
+
+    // 3. Force a reflow (tells the browser to apply styles right now)
+    void body.offsetWidth;
+
+    // 4. Remove the helper class so normal transitions (like clock fades) work again
+    body.classList.remove('no-transitions');
+}
+
+// --- Enhanced Keyboard Listener ---
 document.addEventListener('keydown', (event) => {
-    // Only trigger if not focused on an input element
     if (event.target.tagName !== 'INPUT') {
-        // Reset inactivity timer
+        const key = event.key.toLowerCase();
+        
+        // Activity tracking
         clearTimeout(timeoutId);
         showCursorAndControls();
         timeoutId = setTimeout(hideCursorAndControls, 4000);
 
-        // Toggle dark mode on 'd' key press
-        if (event.key === 'd' || event.key === 'D') {
-            event.preventDefault();
-            darkModeToggle.checked = !darkModeToggle.checked;
-            const changeEvent = new Event('change');
-            darkModeToggle.dispatchEvent(changeEvent);
+        // Awesome sequence tracking
+        typingBuffer += key;
+        if (!"awesome".startsWith(typingBuffer)) {
+            typingBuffer = "awesome".startsWith(key) ? key : "";
         }
-        // Toggle full screen on 'f' key press
-        else if (event.key === 'f' || event.key === 'F') {
-            event.preventDefault();
-            toggleFullScreen();
+
+        if (typingBuffer === "awesome") {
+            triggerAwesomeMode();
+            typingBuffer = "";
+            return;
         }
-        // Toggle seconds display on 's' key press
-        else if (event.key === 's' || event.key === 'S') {
-            event.preventDefault();
-            toggleSeconds.click();
+
+        // 5. Block shortcuts if user is typing "awesome" [Requirement 5]
+        const isTypingAwesome = typingBuffer.length > 0 && "awesome".startsWith(typingBuffer);
+
+        if (!isTypingAwesome) {
+            if (key === 'd') {
+                event.preventDefault();
+                darkModeToggle.checked = !darkModeToggle.checked;
+                darkModeToggle.dispatchEvent(new Event('change'));
+            } else if (key === 'f') {
+                event.preventDefault();
+                toggleFullScreen();
+            } else if (key === 's') {
+                event.preventDefault();
+                toggleSeconds.click();
+            }
         }
     }
 });
