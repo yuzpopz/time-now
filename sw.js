@@ -6,7 +6,9 @@ const ASSETS = [
   './script.js',
   './manifest.json',
   './images/icon180.png',
-  './images/iconn.png'
+  './fonts/Aptos-Bold.ttf',
+  './fonts/Aptos-Bold.woff',
+  './fonts/Aptos-Bold.woff2'
 ];
 
 // Install Event: Caching assets
