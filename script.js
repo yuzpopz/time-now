@@ -1,5 +1,13 @@
 "use strict";
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('Service Worker registered!'))
+      .catch(err => console.log('Service Worker registration failed:', err));
+  });
+}
+
 let h1 = document.getElementById("h1");
 let h2 = document.getElementById("h2");
 let m1 = document.getElementById("m1");

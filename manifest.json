@@ -1,7 +1,9 @@
 {
   "name": "Time Now",
   "short_name": "Time Now",
+  "start_url": "./index.html",
   "display": "standalone",
+  "scope": "./",
   "icons": [
     {
       "src": "images/icon192.png",
@@ -14,5 +16,4 @@
       "type": "image/png"
     }
   ]
-
 }
